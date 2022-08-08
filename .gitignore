@@ -37,3 +37,7 @@
 # for bazel
 bazel-*
 
+# video file
+*.mp4
+*.avi
+
