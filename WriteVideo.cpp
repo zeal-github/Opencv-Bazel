@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     double fps = 10;
     bool is_color = true;
 
-    std::string video_name = "./test_video_001.avi"; // cv::VideoWriter::fourcc('M', 'J', 'P', 'G')
+    // std::string video_name = "./test_video_001.avi"; // cv::VideoWriter::fourcc('M', 'J', 'P', 'G')
     std::string video_name = "./test_video_001.mp4"; // cv::VideoWriter::fourcc('m', 'p', '4', 'v')
     cv::VideoWriter video_writer;
     video_writer.open(video_name, fourcc, fps, cv::Size(width, height), is_color);
