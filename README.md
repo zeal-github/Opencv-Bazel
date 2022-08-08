@@ -1,6 +1,10 @@
 # Opencv-Bazel
 Minimum example to show how to build bazel project which depends on opencv
 
+This project is tested on:
+1. opencv 4.6.0
+2. bazel 5.2.0
+
 # Steps Outline
 
 1. compile opencv locally
