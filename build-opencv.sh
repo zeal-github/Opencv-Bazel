@@ -1,0 +1,122 @@
+# cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.x/modules -DCMAKE_INSTALL_PREFIX=./install -DBUILD_SHARED_LIBS=OFF\
+# 	-D BUILD_PNG=ON \
+# 	-D BUILD_JPEG=ON\
+# 	-D BUILD_TIFF=ON\
+#  	-D BUILD_WEBP=ON\
+# 	-D BUILD_OPENJPEG=ON\
+# 	-D BUILD_JASPER=ON \
+# 	-D BUILD_OPENEXR=ON \
+
+
+# 	-D WITH_OPENNI=ON \
+# 	-D WITH_OPENNI2=ON \
+# 	-D WITH_PVAPI=ON \
+# 	-D WITH_ARAVIS=ON \
+# 	-D WITH_XIMEA=ON \
+# 	-D WITH_XINE=ON \
+# 	-D WITH_LIBREALSENSE=ON \
+# 	-D WITH_MFX=ON \
+# 	-D WITH_GPHOTO2=ON \
+# 	-D WITH_ANDROID_MEDIANDK=ON \
+# 	-D WITH_ZLIB=ON \
+# 	-D VIDEOIO_PLUGIN_LIST=all \
+# 	../opencv-4.x
+
+# 去除 WITH_1394的依赖，默认是ON
+# ffmpeg依旧需要avcodec 、avformat、avutil、swscale依赖，否则编译无法通过，但是repo里面和nvidia机器里面都没有这几个包
+
+# cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.x/modules \
+# 	 -D CMAKE_INSTALL_PREFIX=./install \
+# 	 -D BUILD_SHARED_LIBS=OFF \
+# 	 -D OPENCV_FORCE_3RDPARTY_BUILD=ON\
+# 	 -D OPENCV_GENERATE_PKGCONFIG=ON \
+# 	 -D WITH_1394=OFF \
+# 	 ../opencv-4.x
+
+CUDA_NVCC_FLAGS="-O3 -cudart static -DWIN_INTERFACE_CUSTOM -gencode arch=compute_70,code=sm_70 -gencode arch=compute_70,code=compute_70 --use_fast_math -std=c++14 -Xcompiler -fPIC --expt-extended-lambda"
+CUDA_COMMAND_LINE="-D CUDA_ARCH_BIN:STRING=7.0 -D CUDA_ARCH_PTX:STRING='' -D OPENCV_CMAKE_CUDA_DEBUG:BOOL=ON -D CUDA_VERBOSE_BUILD:BOOL=ON -D WITH_JASPER:BOOL=ON -D OPENCV_IO_ENABLE_JASPER:BOOL=ON"
+EXTRA_COMMAND_LINE="${CUDA_COMMAND_LINE}"
+CPU_BASELINE=""
+
+cmake -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.x/modules \
+	  -D OPENCV_GENERATE_PKGCONFIG=ON \
+      -D CMAKE_SUPPRESS_REGENERATION:BOOL=ON \
+      $EXTRA_COMMAND_LINE \
+      -D CUDA_NVCC_FLAGS="${CUDA_NVCC_FLAGS}" \
+      -D CMAKE_BUILD_TYPE=Release \
+      -D CMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+      -D CMAKE_INSTALL_PREFIX=./install \
+      -D BUILD_SHARED_LIBS:BOOL=OFF \
+      -D BUILD_FAT_JAVA_LIB:BOOL=OFF \
+      -D BUILD_IPP_IW:BOOL=OFF \
+      -D BUILD_ITT:BOOL=OFF \
+      -D BUILD_JASPER:BOOL=ON \
+      -D BUILD_JAVA:BOOL=OFF \
+      -D BUILD_JPEG:BOOL=ON \
+      -D BUILD_PACKAGE:BOOL=OFF \
+      -D BUILD_PERF_TESTS:BOOL=OFF \
+      -D BUILD_PNG:BOOL=ON \
+      -D BUILD_PROTOBUF:BOOL=OFF \
+      -D BUILD_TESTS:BOOL=OFF \
+      -D BUILD_TIFF:BOOL=ON \
+      -D BUILD_ZLIB:BOOL=ON \
+      -D BUILD_opencv_apps:BOOL=OFF \
+      -D BUILD_opencv_dnn:BOOL=OFF \
+      -D BUILD_opencv_gapi:BOOL=OFF \
+      -D BUILD_opencv_java:BOOL=OFF \
+      -D BUILD_opencv_java_bindings_generator:BOOL=OFF \
+      -D BUILD_opencv_ml:BOOL=OFF \
+      -D BUILD_opencv_photo:BOOL=OFF \
+      -D BUILD_opencv_python2:BOOL=OFF \
+      -D BUILD_opencv_python3:BOOL=OFF \
+      -D BUILD_opencv_python_bindings_generator:BOOL=OFF \
+      -D BUILD_opencv_stitching:BOOL=OFF \
+      -D BUILD_opencv_ts:BOOL=OFF \
+      -D BUILD_opencv_video:BOOL=ON \
+      -D BUILD_opencv_videoio:BOOL=ON \
+      -D CMAKE_COLOR_MAKEFILE:BOOL=OFF \
+      -D CMAKE_CXX_FLAGS:STRING=-std=c++14 \
+      -D CMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
+      -D CMAKE_SKIP_RPATH:BOOL=OFF \
+      -D CMAKE_VERBOSE_MAKEFILE:BOOL=OFF \
+      -D CPU_BASELINE:STRING="NEON FP16" \
+      -D CV_TRACE:BOOL=OFF \
+      -D ENABLE_CCACHE:BOOL=OFF \
+      -D ENABLE_PRECOMPILED_HEADERS:BOOL=OFF \
+      -D OPENCL_FOUND:BOOL=OFF \
+      -D OPENCV_DNN_OPENCL:BOOL=OFF \
+      -D OPENCV_GENERATE_SETUPVARS:BOOL=OFF \
+      -D OPENCV_ENABLE_NONFREE:BOOL=ON \
+      -D VIDEOIO_ENABLE_PLUGINS:BOOL=ON \
+	  -D VIDEOIO_PLUGIN_LIST=ffmpeg \
+      -D VIDEOIO_ENABLE_STRICT_PLUGIN_CHECK:BOOL=ON \
+      -D WITH_1394:BOOL=OFF \
+      -D WITH_ADE:BOOL=OFF \
+      -D WITH_EIGEN:BOOL=ON \
+      -D WITH_FFMPEG:BOOL=OFF \
+      -D WITH_GSTREAMER:BOOL=OFF \
+      -D WITH_GTK:BOOL=OFF \
+      -D WITH_IMGCODEC_HDR:BOOL=OFF \
+      -D WITH_IMGCODEC_PFM:BOOL=OFF \
+      -D WITH_IMGCODEC_PXM:BOOL=OFF \
+      -D WITH_IMGCODEC_SUNRASTER:BOOL=OFF \
+      -D WITH_IPP:BOOL=OFF \
+      -D WITH_ITT:BOOL=OFF \
+      -D WITH_LAPACK:BOOL=OFF \
+      -D WITH_OPENCL:BOOL=OFF \
+      -D WITH_OPENCLAMDBLAS:BOOL=OFF \
+      -D WITH_OPENCLAMDFFT:BOOL=OFF \
+      -D WITH_OPENEXR:BOOL=OFF \
+      -D WITH_PROTOBUF:BOOL=OFF \
+      -D WITH_PTHREADS_PF:BOOL=ON \
+      -D WITH_QUIRC:BOOL=OFF \
+      -D WITH_V4L:BOOL=OFF \
+      -D WITH_VTK:BOOL=ON \
+      -D WITH_WEBP:BOOL=ON \
+      -D WITH_VA_INTEL:BOOL=OFF \
+      -D ccitt:BOOL=OFF \
+      -D old-jpeg:BOOL=OFF \
+      -D packbits:BOOL=OFF \
+      -D WITH_ARITH_DEC:BOOL=OFF \
+      -D WITH_ARITH_ENC:BOOL=OFF \
+	  ../opencv-4.x
