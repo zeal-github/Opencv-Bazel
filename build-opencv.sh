@@ -1,30 +1,3 @@
-# cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.x/modules -DCMAKE_INSTALL_PREFIX=./install -DBUILD_SHARED_LIBS=OFF\
-# 	-D BUILD_PNG=ON \
-# 	-D BUILD_JPEG=ON\
-# 	-D BUILD_TIFF=ON\
-#  	-D BUILD_WEBP=ON\
-# 	-D BUILD_OPENJPEG=ON\
-# 	-D BUILD_JASPER=ON \
-# 	-D BUILD_OPENEXR=ON \
-
-
-# 	-D WITH_OPENNI=ON \
-# 	-D WITH_OPENNI2=ON \
-# 	-D WITH_PVAPI=ON \
-# 	-D WITH_ARAVIS=ON \
-# 	-D WITH_XIMEA=ON \
-# 	-D WITH_XINE=ON \
-# 	-D WITH_LIBREALSENSE=ON \
-# 	-D WITH_MFX=ON \
-# 	-D WITH_GPHOTO2=ON \
-# 	-D WITH_ANDROID_MEDIANDK=ON \
-# 	-D WITH_ZLIB=ON \
-# 	-D VIDEOIO_PLUGIN_LIST=all \
-# 	../opencv-4.x
-
-# 去除 WITH_1394的依赖，默认是ON
-# ffmpeg依旧需要avcodec 、avformat、avutil、swscale依赖，否则编译无法通过，但是repo里面和nvidia机器里面都没有这几个包
-
 # cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.x/modules \
 # 	 -D CMAKE_INSTALL_PREFIX=./install \
 # 	 -D BUILD_SHARED_LIBS=OFF \
@@ -119,4 +92,5 @@ cmake -D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.x/modules \
       -D packbits:BOOL=OFF \
       -D WITH_ARITH_DEC:BOOL=OFF \
       -D WITH_ARITH_ENC:BOOL=OFF \
+      -DCMAKE_TOOLCHAIN_FILE=/sandbox/toolchains/aarch64--glibc--stable-2020.08-1/share/buildroot/toolchainfile.cmake\
 	  ../opencv-4.x
